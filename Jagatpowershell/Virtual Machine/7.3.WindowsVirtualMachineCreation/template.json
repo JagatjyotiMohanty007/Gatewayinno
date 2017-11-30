@@ -1,0 +1,307 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_psrvm_name": {
+            "defaultValue": "psrvm",
+            "type": "String"
+        },
+        "networkInterfaces_psrvm14_name": {
+            "defaultValue": "psrvm14",
+            "type": "String"
+        },
+        "networkInterfaces_psrvm280_name": {
+            "defaultValue": "psrvm280",
+            "type": "String"
+        },
+        "networkSecurityGroups_psrvm_nsg_name": {
+            "defaultValue": "psrvm-nsg",
+            "type": "String"
+        },
+        "networkSecurityGroups_psrvmnsg663_name": {
+            "defaultValue": "psrvmnsg663",
+            "type": "String"
+        },
+        "publicIPAddresses_psrvm_ip_name": {
+            "defaultValue": "psrvm-ip",
+            "type": "String"
+        },
+        "publicIPAddresses_psrvmip308_name": {
+            "defaultValue": "psrvmip308",
+            "type": "String"
+        },
+        "virtualNetworks_SriniResourceGroup_vnet_name": {
+            "defaultValue": "SriniResourceGroup-vnet",
+            "type": "String"
+        },
+        "storageAccounts_psrgtypestorageaccount_name": {
+            "defaultValue": "psrgtypestorageaccount",
+            "type": "String"
+        },
+        "storageAccounts_psrptypestorageaccount_name": {
+            "defaultValue": "psrptypestorageaccount",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/SriniResourceGroup/providers/Microsoft.Compute/virtualMachines/psrvm'.",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_psrvm_name')]",
+            "apiVersion": "2016-04-30-preview",
+            "location": "eastus",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_DS4_v2"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServerHPCPack",
+                        "offer": "WindowsServerHPCPack",
+                        "sku": "2012R2CN",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Windows",
+                        "name": "[parameters('virtualMachines_psrvm_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_psrptypestorageaccount_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_psrvm_name'),'20170524071312.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_psrvm_name')]",
+                    "adminUsername": "sriniqwerty",
+					"adminPassword": "SriniQwerty@1234",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true
+                    },
+                    "secrets": []
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_psrvm280_name'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat('https', '://', parameters('storageAccounts_psrgtypestorageaccount_name'), '.blob.core.windows.net', '/')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_psrptypestorageaccount_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_psrvm280_name'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_psrgtypestorageaccount_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/SriniResourceGroup/providers/Microsoft.Network/networkInterfaces/psrvm14'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_psrvm14_name')]",
+            "apiVersion": "2017-03-01",
+            "location": "eastus",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.2.3.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_psrvm_ip_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_SriniResourceGroup_vnet_name')), '/subnets/default')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_psrvm_nsg_name'))]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_psrvm_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_SriniResourceGroup_vnet_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_psrvm_nsg_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/SriniResourceGroup/providers/Microsoft.Network/networkInterfaces/psrvm280'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_psrvm280_name')]",
+            "apiVersion": "2017-03-01",
+            "location": "eastus",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.2.3.5",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_psrvmip308_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_SriniResourceGroup_vnet_name')), '/subnets/default')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_psrvmnsg663_name'))]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_psrvmip308_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_SriniResourceGroup_vnet_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_psrvmnsg663_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/SriniResourceGroup/providers/Microsoft.Network/networkSecurityGroups/psrvm-nsg'.",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('networkSecurityGroups_psrvm_nsg_name')]",
+            "apiVersion": "2017-03-01",
+            "location": "eastus",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "default-allow-rdp",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3389",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1000,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/SriniResourceGroup/providers/Microsoft.Network/networkSecurityGroups/psrvmnsg663'.",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('networkSecurityGroups_psrvmnsg663_name')]",
+            "apiVersion": "2017-03-01",
+            "location": "eastus",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "default-allow-rdp",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3389",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1000,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/SriniResourceGroup/providers/Microsoft.Network/publicIPAddresses/psrvm-ip'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_psrvm_ip_name')]",
+            "apiVersion": "2017-03-01",
+            "location": "eastus",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/SriniResourceGroup/providers/Microsoft.Network/publicIPAddresses/psrvmip308'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_psrvmip308_name')]",
+            "apiVersion": "2017-03-01",
+            "location": "eastus",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/SriniResourceGroup/providers/Microsoft.Network/virtualNetworks/SriniResourceGroup-vnet'.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_SriniResourceGroup_vnet_name')]",
+            "apiVersion": "2017-03-01",
+            "location": "eastus",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.2.3.0/24"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "default",
+                        "properties": {
+                            "addressPrefix": "10.2.3.0/24"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": []
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/sriniresourcegroup/providers/Microsoft.Storage/storageAccounts/psrgtypestorageaccount'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_psrgtypestorageaccount_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "eastus",
+            "tags": {},
+            "properties": {},
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/sriniresourcegroup/providers/Microsoft.Storage/storageAccounts/psrptypestorageaccount'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Premium_LRS",
+                "tier": "Premium"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_psrptypestorageaccount_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "eastus",
+            "tags": {},
+            "properties": {},
+            "dependsOn": []
+        }
+    ]
+}

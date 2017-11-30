@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "namespaces_psreventhuubnamespace_name": {
+            "defaultValue": "psreventhuubnamespace",
+            "type": "String"
+        },
+        "AuthorizationRules_RootManageSharedAccessKey_name": {
+            "defaultValue": "psreventhuubnamespace/RootManageSharedAccessKey",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourcegroups/SriniResourceGroup/providers/Microsoft.EventHub/namespaces/psreventhuubnamespace'.",
+            "type": "Microsoft.EventHub/namespaces",
+            "sku": {
+                "name": "Standard",
+                "tier": "Standard"
+            },
+            "kind": "EventHub",
+            "name": "[parameters('namespaces_psreventhuubnamespace_name')]",
+            "apiVersion": "2015-08-01",
+            "location": "East US",
+            "tags": {},
+            "properties": {
+                "provisioningState": "Succeeded",
+                "status": "Active",
+                "createdAt": "2017-05-18T13:21:19.76Z",
+                "serviceBusEndpoint": "[concat('https://', parameters('namespaces_psreventhuubnamespace_name'),'.servicebus.windows.net:443/')]",
+                "enabled": true,
+                "updatedAt": "2017-05-18T13:21:43.7Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourcegroups/SriniResourceGroup/providers/Microsoft.EventHub/namespaces/psreventhuubnamespace/AuthorizationRules/RootManageSharedAccessKey'.",
+            "type": "Microsoft.EventHub/namespaces/AuthorizationRules",
+            "name": "[parameters('AuthorizationRules_RootManageSharedAccessKey_name')]",
+            "apiVersion": "2015-08-01",
+            "properties": {
+                "rights": [
+                    "Listen",
+                    "Manage",
+                    "Send"
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_psreventhuubnamespace_name'))]"
+            ]
+        }
+    ]
+}

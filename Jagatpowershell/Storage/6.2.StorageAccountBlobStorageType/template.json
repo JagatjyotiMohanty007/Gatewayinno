@@ -1,0 +1,114 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccounts_spbtstorageaccountone_name": {
+            "defaultValue": "spbtstorageaccountone",
+            "type": "String"
+        },
+		"storageAccounts_spbtstorageaccounttwo_name": {
+            "defaultValue": "spbtstorageaccounttwo",
+            "type": "String"
+        },
+		        "storageAccounts_spbtstorageaccountthree_name": {
+            "defaultValue": "spbtstorageaccountthree",
+            "type": "String"
+        },
+		        "storageAccounts_spbtstorageaccountfour_name": {
+            "defaultValue": "spbtstorageaccountfour",
+            "type": "String"
+        },
+		        "storageAccounts_spbtstorageaccountfive_name": {
+            "defaultValue": "spbtstorageaccountfive",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/spresourcegroup/providers/Microsoft.Storage/storageAccounts/spbtstorageaccountone'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "BlobStorage",
+            "name": "[parameters('storageAccounts_spbtstorageaccountone_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "eastus",
+            "tags": {},
+            "properties": {
+                "accessTier": "Hot"
+            },
+            "dependsOn": []
+        },
+		{
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/spresourcegroup/providers/Microsoft.Storage/storageAccounts/spbtstorageaccounttwo'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "BlobStorage",
+            "name": "[parameters('storageAccounts_spbtstorageaccounttwo_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "eastus",
+            "tags": {},
+            "properties": {
+                "accessTier": "Hot"
+            },
+            "dependsOn": []
+        },
+		{
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/spresourcegroup/providers/Microsoft.Storage/storageAccounts/spbtstorageaccountthree'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "BlobStorage",
+            "name": "[parameters('storageAccounts_spbtstorageaccountthree_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "eastus",
+            "tags": {},
+            "properties": {
+                "accessTier": "Hot"
+            },
+            "dependsOn": []
+        },
+		{
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/spresourcegroup/providers/Microsoft.Storage/storageAccounts/spbtstorageaccountfour'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "BlobStorage",
+            "name": "[parameters('storageAccounts_spbtstorageaccountfour_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "eastus",
+            "tags": {},
+            "properties": {
+                "accessTier": "Hot"
+            },
+            "dependsOn": []
+        },
+		{
+            "comments": "Generalized from resource: '/subscriptions/e2186114-ebc1-4579-87b0-d455b33cd6cf/resourceGroups/spresourcegroup/providers/Microsoft.Storage/storageAccounts/spbtstorageaccountfive'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "BlobStorage",
+            "name": "[parameters('storageAccounts_spbtstorageaccountfive_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "eastus",
+            "tags": {},
+            "properties": {
+                "accessTier": "Hot"
+            },
+            "dependsOn": []
+        }
+    ]
+}
